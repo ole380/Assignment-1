@@ -1,0 +1,30 @@
+import java.util.*;
+
+public class Test1 {
+
+    public static void main(String[] args) {
+    	Scanner sc = new Scanner(System.in);
+    	int n = sc.nextInt();
+    	
+    	for(int i=1; i<=n; i++) {
+    		int h = sc.nextInt();
+    		System.out.printf("%d%n",h);
+    		h = h % 180;
+    		System.out.printf("%d%n",h);
+    		h = h/10;
+    		System.out.printf("%d%n",h);
+    		h = Math.round(h);
+    		System.out.printf("%d%n",h);
+    		if(h == 0) {
+    			h = 18;
+    			System.out.printf("%d%n",h);
+    		}
+    		
+    		if(h>9) {
+    			System.out.printf("%d%n",h);
+    		} else {
+    			System.out.printf("0%d%n",n);
+    		}
+    	}
+    }
+}
