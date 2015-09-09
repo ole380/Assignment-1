@@ -15,7 +15,7 @@ package assignment1;
  * 		precondition
  * 			Character c is a letter.
  * 		postcondition
- * 			A new Identifier which contains the content of c is created.
+ * 			A new Identifier which contains the c is created.
  * 	Identifier(Identifier src);
  * 		precondition
  * 			None.
