@@ -1,6 +1,6 @@
 package assignment1;
 
-/*ADT for the class Collection 
+/*ADT for the class Collection  
 * 	@author
 * 		Erik Baalhuis & Niels van der Molen
 * 	@elements
@@ -40,7 +40,7 @@ public interface CollectionInterface {
 	/* Checks if an identifier is in the collection.
 	 * @precondition
 	 * 		None.
-	 * @POST-condition
+	 * @postcondition
 	 * 		True: The identifier is in the collection.
 	 * 		False: The identifier is not in the collection.
 	 */
@@ -50,9 +50,10 @@ public interface CollectionInterface {
 	 * @precondition
 	 * 		None.
 	 * @postcondition
-	 * 		The identifier is now in the POST-collection.
+	 * 		Success: The identifier is now in the POST-collection.
+	 *      Failure: An Exception is thrown because adding the identifier creates a collection with over 20 elements.
 	 */
-	void addIdentifier(Identifier identifier);
+	void addIdentifier(Identifier identifier) throws Exception;
 	
 	/* Removes an identifier from the collection.
 	 * @precondition
@@ -84,7 +85,7 @@ public interface CollectionInterface {
 	/*  Returns the size of the collection as an int.
 	 * @precondition
 	 * 		None.
-	 * @POST-condition
+	 * @postcondition
 	 * 		The size of the collection is returned as an int.
 	 */
 	int size();
