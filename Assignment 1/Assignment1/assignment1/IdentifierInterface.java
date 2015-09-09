@@ -30,7 +30,7 @@ public interface IdentifierInterface {
 	 *  	None.
 	 *  @POST-Condition:
 	 *  	Success: The Identifier object contains only the content c.
-	 *  	Failure: An Exception is thrown because the character c is not alphanumeric.
+	 *  	Failure: An Exception is thrown because the character c is not a letter.
 	 */
 	void init(char c) throws Exception;
 	
