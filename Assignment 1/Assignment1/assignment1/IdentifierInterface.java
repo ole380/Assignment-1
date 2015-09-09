@@ -49,7 +49,7 @@ public interface IdentifierInterface {
 	 * @PRE-Condition
 	 * 		None.
 	 * @POST-Condition
-	 * 		The character added last is removed from the PRE-identifier, and returned.
+	 * 		Success: The character added last is removed from the PRE-identifier, and returned.
 	 * 		Failure: An Exception is thrown because the PRE-identifier contains only one character, which may not be removed.
 	 */
 	char removeLastCharacter() throws Exception;

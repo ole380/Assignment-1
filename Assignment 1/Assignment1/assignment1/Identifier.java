@@ -1,5 +1,5 @@
 package assignment1;
 
-public class Identifier {
+public class Identifier implements IdentifierInterface {
 
 }
