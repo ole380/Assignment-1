@@ -1,55 +1,76 @@
 package assignment1;
 
 /*ADT for the class Identifier
- * 	Author: Erik Baalhuis & Niels van der Molen
- * 	Elements: alphanumeric characters of type String.
- * 	Structure: Linear.
- * 	Domain: All combinations of one or more alphanumeric characters that start with a letter.
+ * 	@author Erik Baalhuis & Niels van der Molen
+ * 	@elements 
+ * 		alphanumeric characters of type char.
+ * 	@structure
+ * 		Linear.
+ * 	@domain 
+ * 		All combinations of one or more elements that start with a letter.
  * 
- * 	Constructors
- * 
- * 	Identifier(String s);
- * 		PRE-condition
- * 			String s starts with a letter and contains only alphanumeric characters.
- * 		POST-condition
- * 			A new Identifier which contains the linear content of String s is created.
- * 
+ * 	@constructor
+ * 	Identifier(char c);
+ * 		PRE-Condition
+ * 			Character c is a letter.
+ * 		POST-Condition
+ * 			A new Identifier which contains the content of c is created.
  * 	Identifier(Identifier src);
- * 		PRE-condition
+ * 		PRE-Condition
  * 			None.
- * 		POST-condition
+ * 		POST-Condition
  * 			A new Identifier object which is a copy of src is created.
  * 	
 */	
 public interface IdentifierInterface {
-
-	/** Initializes the Identifier object (..)????
-	 *  PRE-Condition:
-	 *  POST-Condition:
+	
+	/* Initializes the Identifier object with content c.
+	 *  @PRE-Condition:
+	 *  	None.
+	 *  @POST-Condition:
+	 *  	Success: The Identifier object contains only the content c.
+	 *  	Failure: An Exception is thrown because the character c is not alphanumeric.
 	 */
-	void init();
+	void init(char c) throws Exception;
 	
 	// Elementary operations for read & write
 	
-	/* Reads an identifier.
-	 * PRE-Condition
+	/* Adds a character c to the Identifier
+	 * @PRE-Condition
 	 * 		None.
-	 * POST-Condition
-	 * 		The content of the identifier is returned in string format.
+	 * @POST-Condition
+	 * 		Success: The character c is added to the end of the Identifier.
+	 * 		Failure: An Exception is thrown because the character c is not alphanumeric.
 	 */
-	String read();
+	void addCharacter(char c) throws Exception;
+	
+	/* Removes and returns the character that was added last.
+	 * @PRE-Condition
+	 * 		None.
+	 * @POST-Condition
+	 * 		The character added last is removed from the PRE-identifier, and returned.
+	 * 		Failure: An Exception is thrown because the PRE-identifier contains only one character, which may not be removed.
+	 */
+	char removeLastCharacter() throws Exception;
+	
+	/* Returns an identifier as a String object.
+	 * @PRE-Condition
+	 * 		None.
+	 * @POST-Condition
+	 * 		The content of the identifier is returned as a String object.
+	 */
+	String toString();
 	
 	// Natural operations
 	
 	/* Compares two identifiers.
-	 * PRE-Condition
+	 * @PRE-Condition
 	 * 		None.
-	 * POST-True 
-	 * 		The content of both identifiers is equal.
-	 * POST-False
-	 * 		The content of both identifiers is different.
+	 * @POST-Condition
+	 * 		True: The content of both identifiers is equal.
+	 * 		False: The content of both identifiers is different.
 	 */
-	boolean isEqual(Identifier ident);
+	boolean isEqual(Identifier identifier);
 	
 	/* Checks the amount of characters of an identifier
 	 * PRE-Condition
