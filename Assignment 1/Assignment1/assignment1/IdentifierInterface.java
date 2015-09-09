@@ -1,7 +1,8 @@
 package assignment1;
 
 /*ADT for the class Identifier
- * 	@author Erik Baalhuis & Niels van der Molen
+ * 	@author
+ * 		Erik Baalhuis & Niels van der Molen
  * 	@elements 
  * 		alphanumeric characters of type char.
  * 	@structure
