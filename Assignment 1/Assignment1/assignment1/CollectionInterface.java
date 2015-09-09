@@ -13,24 +13,24 @@ package assignment1;
 * 	@constructor
 * 	
 * 	Collection();
-* 		PRE-Condition
+* 		precondition
 *  			None.
-* 		POST-Condition
+* 		postcondition
 * 			A new empty Collection object is created.
 * 
 * 	Collection(Collection src);
-* 		PRE-Condition
+* 		precondition
 * 			None.
-* 		POST-Condition
+* 		postcondition
 * 			A new Collection object is created which is a copy of scr.
 */
 
 public interface CollectionInterface {
 	
 	/* Initializes the Collection object to the empty collection. 
-	 * @PRE-Condition
+	 * @precondition
 	 * 		None.
-	 * @POST-Condition
+	 * @postcondition
 	 * 		The collection is empty.
 	 */
 	void init();
@@ -38,7 +38,7 @@ public interface CollectionInterface {
 	// Elementary read and write
 	
 	/* Checks if an identifier is in the collection.
-	 * @PRE-Condition
+	 * @precondition
 	 * 		None.
 	 * @POST-condition
 	 * 		True: The identifier is in the collection.
@@ -47,25 +47,25 @@ public interface CollectionInterface {
 	boolean containsIdentifier(Identifier identifier);
 	
 	/* Adds an identifier to the collection.
-	 * @PRE-Condition
+	 * @precondition
 	 * 		None.
-	 * @POST-Condition
+	 * @postcondition
 	 * 		The identifier is now in the POST-collection.
 	 */
 	void addIdentifier(Identifier identifier);
 	
 	/* Removes an identifier from the collection.
-	 * @PRE-Condition
+	 * @precondition
 	 * 		None.
-	 * @POST-Condition
+	 * @postcondition
 	 * 		The identifier is not in the POST-collection.
 	 */
 	void removeIdentifier(Identifier identifier);
 	
 	/* Returns an Identifier that is in the collection.
-	 * @PRE-Condition
+	 * @precondition
 	 * 		None.
-	 * @POST-Condition
+	 * @postcondition
 	 * 		An identifier of type Identifier that is in the collection is returned.
 	 */
 	Identifier get();
@@ -73,7 +73,7 @@ public interface CollectionInterface {
 	// Natural operations
 	
 	/*  Checks if two collections are equal.
-	 * @PRE-Condition
+	 * @precondition
 	 * 		None.
 	 * @POST-condition
 	 * 		True: The collections are equal.
@@ -81,35 +81,43 @@ public interface CollectionInterface {
 	 */
 	boolean isEqual(Collection collection);
 	
-	/* Determines the difference of the collections.
-	 * @PRE-Condition
+	/*  Returns the size of the collection as an int.
+	 * @precondition
 	 * 		None.
-	 * @POST-Condition
+	 * @POST-condition
+	 * 		The size of the collection is returned as an int.
+	 */
+	int size();
+	
+	/* Determines the difference of the collections.
+	 * @precondition
+	 * 		None.
+	 * @postcondition
 	 * 		The difference of the two collections is returned as a Collection object.
 	 */
 	Collection difference(Collection collection);
 	
 	/* Determines the intersection of the collections.
-	 * @PRE-Condition
+	 * @precondition
 	 * 		None.
-	 * @POST-Condition
+	 * @postcondition
 	 * 		The intersection of the two collections is returned as a Collection object.
 	 */
 	Collection intersection(Collection collection);
 	
 	/* Determines the union of the collections.
-	 * @PRE-Condition
+	 * @precondition
 	 * 		None.
-	 * @POST-Condition
+	 * @postcondition
 	 * 		Success: The union of the two collections is returned as a Collection object.
 	 * 		Failure: An Exception is thrown because the union of the two collections contains over 20 identifiers.
 	 */
 	Collection union(Collection collection) throws Exception;
 	
 	/* Determines the symmetric difference of the collections.
-	 * @PRE-Condition
+	 * @precondition
 	 * 		None.
-	 * @POST-Condition
+	 * @postcondition
 	 * 		Success: The symmetric difference of the two collections is returned as a Collection object.
 	 * 		Failure: An Exception is thrown because the symmetric difference of the two collections contains over 20 identifiers.
 	 */
