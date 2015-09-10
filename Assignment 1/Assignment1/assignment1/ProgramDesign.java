@@ -3,7 +3,6 @@ package assignment1;
 /*Design for assignment 1 program.
  * 	@author
  * 		Erik Baalhuis & Niels van der Molen
- * 	
  */	
 
 /* Main method. Calls the input method to obtain two input collections, then calls the output method to print what is required.
