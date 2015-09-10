@@ -87,8 +87,9 @@ public class Collection implements CollectionInterface {
 	public Collection intersection(Collection collection2) {
 		Collection resultCollection = new Collection();
 		for (int i=0; i<collection2.size; i++){
-			if (!containsIdentifier(collection2.collection[i])){
-				resultCollection.addIdentifier(collection2.collection[i]);
+			if (containsIdentifier(collection2.collection[i])){
+				resultCollection.collection[i] = collection[i];
+				resultCollection.size++;
 			}
 		}
 		return resultCollection;
