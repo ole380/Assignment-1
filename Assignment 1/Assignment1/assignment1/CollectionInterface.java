@@ -51,7 +51,7 @@ public interface CollectionInterface {
 	 * 		None.
 	 * @postcondition
 	 * 		Success: The identifier is now in the POST-collection.
-	 *      Failure: An Exception is thrown because adding the identifier creates a collection with over 20 elements.
+	 *      Failure: An Exception is thrown if adding the identifier creates a collection with over 20 elements.
 	 */
 	void addIdentifier(Identifier identifier) throws Exception;
 	
@@ -65,7 +65,7 @@ public interface CollectionInterface {
 	
 	/* Returns an Identifier that is in the collection.
 	 * @precondition
-	 * 		None.
+	 * 		The collection is not empty.
 	 * @postcondition
 	 * 		An identifier of type Identifier that is in the collection is returned.
 	 */
@@ -90,37 +90,46 @@ public interface CollectionInterface {
 	 */
 	int size();
 	
-	/* Determines the difference of the collections.
+	/*  Checks if the collection is empty.
 	 * @precondition
 	 * 		None.
 	 * @postcondition
-	 * 		The difference of the two collections is returned as a Collection object.
+	 * 		True: The collection is empty.
+	 * 		False: The collection is not empty.
 	 */
-	Collection difference(Collection collection);
+	boolean isEmpty();
+	
+	/* Determines the difference of two collections.
+	 * @precondition
+	 * 		None.
+	 * @postcondition
+	 * 		The difference of this collection with collection2 is returned as a Collection object.
+	 */
+	Collection difference(Collection collection2);
 	
 	/* Determines the intersection of the collections.
 	 * @precondition
 	 * 		None.
 	 * @postcondition
-	 * 		The intersection of the two collections is returned as a Collection object.
+	 * 		The intersection of this collection with collection2 is returned as a Collection object.
 	 */
-	Collection intersection(Collection collection);
+	Collection intersection(Collection collection2);
 	
 	/* Determines the union of the collections.
 	 * @precondition
 	 * 		None.
 	 * @postcondition
-	 * 		Success: The union of the two collections is returned as a Collection object.
-	 * 		Failure: An Exception is thrown because the union of the two collections contains over 20 identifiers.
+	 * 		Success: The union of this collection with collection2 as a Collection object.
+	 * 		Failure: An Exception is thrown if the union of the two collections contains over 20 identifiers.
 	 */
-	Collection union(Collection collection) throws Exception;
+	Collection union(Collection collection2) throws Exception;
 	
 	/* Determines the symmetric difference of the collections.
 	 * @precondition
 	 * 		None.
 	 * @postcondition
-	 * 		Success: The symmetric difference of the two collections is returned as a Collection object.
-	 * 		Failure: An Exception is thrown because the symmetric difference of the two collections contains over 20 identifiers.
+	 * 		Success: The symmetric difference of this collection with collection2 is returned as a Collection object.
+	 * 		Failure: An Exception is thrown if the symmetric difference of the two collections contains over 20 identifiers.
 	 */
-	Collection symmetricDifference(Collection collection) throws Exception;
+	Collection symmetricDifference(Collection collection2) throws Exception;
 }

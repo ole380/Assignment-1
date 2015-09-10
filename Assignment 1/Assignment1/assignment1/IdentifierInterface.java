@@ -4,11 +4,11 @@ package assignment1;
  * 	@author
  * 		Erik Baalhuis & Niels van der Molen
  * 	@elements 
- * 		Alphanumeric characters of type char.
+ * 		Characters of type char.
  * 	@structure
  * 		Linear.
  * 	@domain 
- * 		All combinations of one or more elements that start with a letter.
+ * 		All combinations of one or more alphanumeric characters that start with a letter.
  * 
  * 	@constructor
  * 	Identifier(char c);
@@ -27,32 +27,29 @@ public interface IdentifierInterface {
 	
 	/* Initializes the Identifier object with content c.
 	 *  @precondition:
-	 *  	None.
+	 *  	Character c is a letter.
 	 *  @postcondition:
-	 *  	Success: The Identifier object contains only the content c.
-	 *  	Failure: An Exception is thrown because the character c is not a letter.
+	 *  	The Identifier object contains only the content c.
 	 */
-	void init(char c) throws Exception;
+	void init(char c);
 	
 	// Elementary operations for read & write
 	
 	/* Adds a character c to the Identifier
 	 * @precondition
-	 * 		None.
+	 * 		Character c is a letter.
 	 * @postcondition
-	 * 		Success: The character c is added to the end of the Identifier.
-	 * 		Failure: An Exception is thrown because the character c is not alphanumeric.
+	 * 		The character c is added to the end of the Identifier.
 	 */
-	void addCharacter(char c) throws Exception;
+	void addCharacter(char c);
 	
 	/* Removes and returns the last character that was added to the identifier.
 	 * @precondition
-	 * 		None.
+	 * 		The identifier contains more than one element.
 	 * @postcondition
-	 * 		Success: The character added last is removed from the PRE-identifier, and returned.
-	 * 		Failure: An Exception is thrown because the PRE-identifier contains only one character, which may not be removed.
+	 * 		The character added last is removed from the PRE-identifier, and returned.
 	 */
-	char removeLastCharacter() throws Exception;
+	char removeLastCharacter();
 	
 	/* Returns an identifier as a String object.
 	 * @precondition
