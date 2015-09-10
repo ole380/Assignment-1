@@ -4,8 +4,8 @@ public class Collection implements CollectionInterface {
 
 	static final int MAX_COLLECTION_SIZE = 20;
 	
-	private Identifier[] collection;
-	private int size;
+	Identifier[] collection;
+	int size;
 	
  	Collection(){
  		collection = new Identifier[MAX_COLLECTION_SIZE];
@@ -55,8 +55,16 @@ public class Collection implements CollectionInterface {
 		return collection[size-1];
 	}
 
-	public boolean isEqual(Collection collection) {
-			// TODO
+	public boolean isEqual(Collection collection2) {
+		if(size == collection2.size){
+			for(int i=0; i<collection2.size; i++){
+				if (collection2.containsIdentifier(collection[i])){
+					continue;
+				}
+			return false;
+			}
+			return true;
+		}
 		return false;
 	}
 
@@ -76,10 +84,14 @@ public class Collection implements CollectionInterface {
 		return resultCollection;
 	}
 
-	@Override
 	public Collection intersection(Collection collection2) {
-		// TODO Auto-generated method stub
-		return null;
+		Collection resultCollection = new Collection();
+		for (int i=0; i<collection2.size; i++){
+			if (!containsIdentifier(collection2.collection[i])){
+				resultCollection.addIdentifier(collection2.collection[i]);
+			}
+		}
+		return resultCollection;
 	}
 
 	@Override

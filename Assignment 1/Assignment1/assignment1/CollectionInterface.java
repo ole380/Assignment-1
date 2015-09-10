@@ -73,14 +73,14 @@ public interface CollectionInterface {
 	
 	// Natural operations
 	
-	/*  Checks if two collections are equal.
+	/*  Checks if this collection is equal to collection2.
 	 * @precondition
 	 * 		None.
 	 * @POST-condition
 	 * 		True: The collections are equal.
 	 * 		False: The collections are not equal.
 	 */
-	boolean isEqual(Collection collection);
+	boolean isEqual(Collection collection2);
 	
 	/*  Returns the size of the collection as an int.
 	 * @precondition
