@@ -57,7 +57,7 @@ public class Collection implements CollectionInterface {
 
 	public boolean isEqual(Collection collection2) {
 		if(size == collection2.size){
-			for(int i=0; i<collection2.size; i++){
+			for(int i=0; i<size; i++){
 				if (collection2.containsIdentifier(collection[i])){
 					continue;
 				}
@@ -86,25 +86,30 @@ public class Collection implements CollectionInterface {
 
 	public Collection intersection(Collection collection2) {
 		Collection resultCollection = new Collection();
-		for (int i=0; i<collection2.size; i++){
+		for (int i=0; i<size; i++){
 			if (containsIdentifier(collection2.collection[i])){
-				resultCollection.collection[i] = collection[i];
+				resultCollection.collection[resultCollection.size] = collection[i];
 				resultCollection.size++;
 			}
 		}
 		return resultCollection;
 	}
 
-	@Override
 	public Collection union(Collection collection2) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Collection resultCollection = new Collection(this);
+		for (int i=0; i<collection2.size; i++){
+			if (resultCollection.size<20 || resultCollection.containsIdentifier(collection2.collection[i])){
+				resultCollection.addIdentifier(collection2.collection[i]);
+				resultCollection.size++;
+			} else {
+				throw new Exception("Union contains over 20 identifiers, cannot form union.");
+			}
+		}
+		return resultCollection;
 	}
 
-	@Override
 	public Collection symmetricDifference(Collection collection2) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return union(collection2).difference(intersection(collection2));
 	}
 
 }
