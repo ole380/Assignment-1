@@ -98,7 +98,7 @@ public class Collection implements CollectionInterface {
 	public Collection union(Collection collection2) throws Exception {
 		Collection resultCollection = new Collection(this);
 		for (int i=0; i<collection2.size; i++){
-			if (resultCollection.size<20 || resultCollection.containsIdentifier(collection2.collection[i])){
+			if (resultCollection.size<MAX_COLLECTION_SIZE || resultCollection.containsIdentifier(collection2.collection[i])){
 				resultCollection.addIdentifier(collection2.collection[i]);
 				resultCollection.size++;
 			} else {
@@ -109,7 +109,7 @@ public class Collection implements CollectionInterface {
 	}
 
 	public Collection symmetricDifference(Collection collection2) throws Exception {
-		return union(collection2).difference(intersection(collection2));
+		return (this.difference(collection2)).union(collection2.difference(this));
 	}
 
 }

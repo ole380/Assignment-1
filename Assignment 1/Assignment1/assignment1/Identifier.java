@@ -2,34 +2,51 @@ package assignment1;
 
 public class Identifier implements IdentifierInterface {
 
-	@Override
+	StringBuffer identifier;
+	int length;
+	
+	Identifier(char c){
+		identifier = new StringBuffer();
+		identifier.append(c);
+		length = 1;
+	}
+	
+	Identifier(Identifier src){
+		identifier = src.identifier;
+	}
+	
 	public void init(char c) {
-		// TODO Auto-generated method stub
-		
+		identifier = new StringBuffer();
+		identifier.append(c);
+		length = 1;
 	}
 
-	@Override
 	public void addCharacter(char c) {
-		// TODO Auto-generated method stub
-		
+		identifier.append(c);
+		length++;
 	}
 
-	@Override
 	public char removeLastCharacter() {
-		// TODO Auto-generated method stub
-		return 0;
+		char lastChar = identifier.charAt(length-1);
+		identifier.deleteCharAt(length-1);
+		return lastChar;
 	}
 
-	@Override
-	public boolean isEqual(Identifier identifier) {
-		// TODO Auto-generated method stub
+	public boolean isEqual(Identifier identifier2) {
+		if (length==identifier2.length){
+			for (int i=0; i<length; i++){
+				if(identifier.charAt(i)==identifier2.identifier.charAt(i)){
+					continue;
+				}
+				return false;
+			}
+			return true;
+		}
 		return false;
 	}
 
-	@Override
 	public int length() {
-		// TODO Auto-generated method stub
-		return 0;
+		return length;
 	}
 
 }
