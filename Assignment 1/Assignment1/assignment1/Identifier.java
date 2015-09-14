@@ -4,23 +4,23 @@ public class Identifier implements IdentifierInterface {
 
 	private StringBuffer identifier;
 	private int length;
-	
+
 	Identifier(char c){
 		identifier = new StringBuffer();
 		identifier.append(c);
 		length = 1;
 	}
-	
+
 	Identifier(Identifier src){
 		identifier = src.identifier;
 	}
-	
+
 	public void init(char c) {
 		identifier = new StringBuffer();
 		identifier.append(c);
 		length = 1;
 	}
-	
+
 	public String toString(){
 		return identifier.toString();
 	}

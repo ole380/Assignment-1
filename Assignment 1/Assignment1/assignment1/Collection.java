@@ -93,39 +93,41 @@ public class Collection implements CollectionInterface {
 	}
 
 
-public Collection difference(Collection collection2){
-	Collection resultCollection = new Collection(this);
-	for (int i=0; i<collection2.size; i++){
-		resultCollection.removeIdentifier(collection2.identifierArray[i]);
-	}
-	return resultCollection;
-}
-
-public Collection intersection(Collection collection2) {
-	Collection resultCollection = new Collection();
-	for (int i=0; i<size; i++){
-		if (containsIdentifier(collection2.identifierArray[i])){
-			resultCollection.identifierArray[resultCollection.size] = collection2.identifierArray[i];
-			resultCollection.size++;
+	public Collection difference(Collection collection2){
+		Collection resultCollection = new Collection(this);
+		for (int i=0; i<collection2.size; i++){
+			resultCollection.removeIdentifier(collection2.identifierArray[i]);
 		}
+		return resultCollection;
 	}
-	return resultCollection;
-}
 
-public Collection union(Collection collection2) throws Exception {
-	Collection resultCollection = new Collection(this);
-	for (int i=0; i<collection2.size; i++){
-		if (resultCollection.size<MAX_COLLECTION_SIZE || resultCollection.containsIdentifier(collection2.identifierArray[i])){
-			resultCollection.addIdentifier(collection2.identifierArray[i]);
-		}else{
-			throw new Exception("set contains over 20 identifiers, cannot form set.");
+	public Collection intersection(Collection collection2) {
+		Collection resultCollection = new Collection();
+		for (int i=0; i<collection2.size; i++){
+			if (containsIdentifier(collection2.identifierArray[i])){
+				resultCollection.identifierArray[resultCollection.size] = collection2.identifierArray[i];
+				resultCollection.size++;
+			}
 		}
+		return resultCollection;
 	}
-	return resultCollection;
-}
 
-public Collection symmetricDifference(Collection collection2) throws Exception {
-	return (this.difference(collection2)).union(collection2.difference(this));
-}
+	public Collection union(Collection collection2) throws Exception {
+		Collection resultCollection = new Collection(this);
+		for (int i=0; i<collection2.size; i++){
+			if (resultCollection.size<MAX_COLLECTION_SIZE){
+				resultCollection.addIdentifier(collection2.identifierArray[i]);
+			}else if(resultCollection.containsIdentifier(collection2.identifierArray[i])){
+				continue;
+			}else{
+				throw new Exception("set contains over 20 identifiers, cannot form set.");
+			}
+		}
+		return resultCollection;
+	}
+
+	public Collection symmetricDifference(Collection collection2) throws Exception {
+		return (this.difference(collection2)).union(collection2.difference(this));
+	}
 
 }

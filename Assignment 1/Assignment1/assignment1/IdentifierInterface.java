@@ -1,6 +1,6 @@
 package assignment1;
 
-/*ADT for the class Identifier
+/** ADT for the class Identifier
  * 	@author
  * 		Erik Baalhuis & Niels van der Molen
  * 	@elements 
@@ -12,69 +12,69 @@ package assignment1;
  * 
  * 	@constructor
  * 	Identifier(char c);
- * 		precondition
+ * 		@precondition
  * 			Character c is a letter.
- * 		postcondition
+ * 		@postcondition
  * 			A new Identifier which contains the c is created.
  * 	Identifier(Identifier src);
- * 		precondition
+ * 		@precondition
  * 			None.
- * 		postcondition
+ * 		@postcondition
  * 			A new Identifier object which is a copy of src is created.
  * 	
-*/	
+ **/	
 public interface IdentifierInterface {
-	
-	/* Initializes the Identifier object with content c.
+
+	/** Initializes the Identifier object with content c.
 	 *  @precondition:
 	 *  	Character c is a letter.
 	 *  @postcondition:
 	 *  	The Identifier object contains only the content c.
-	 */
+	 **/
 	void init(char c);
-	
+
 	// Elementary operations for read & write
-	
-	/* Adds a character c to the Identifier
+
+	/** Adds a character c to the Identifier
 	 * @precondition
 	 * 		Character c is a letter.
 	 * @postcondition
 	 * 		The character c is added to the end of the Identifier.
-	 */
+	 **/
 	void addCharacter(char c);
-	
-	/* Removes and returns the last character that was added to the identifier.
+
+	/** Removes and returns the last character that was added to the identifier.
 	 * @precondition
 	 * 		The identifier contains more than one element.
 	 * @postcondition
 	 * 		The character added last is removed from the PRE-identifier, and returned.
-	 */
+	 **/
 	char removeLastCharacter();
-	
-	/* Returns an identifier as a String object.
+
+	/** Returns an identifier as a String object.
 	 * @precondition
 	 * 		None.
 	 * @postcondition
 	 * 		The content of the identifier is returned as a String object.
-	 */
+	 **/
 	String toString();
-	
+
 	// Natural operations
-	
-	/* Compares two identifiers.
+
+	/** Compares two identifiers.
 	 * @precondition
 	 * 		None.
 	 * @postcondition
 	 * 		True: The content of both identifiers is equal.
 	 * 		False: The content of both identifiers is different.
-	 */
+	 **/
 	boolean isEqual(Identifier identifier);
-	
-	/* Checks the amount of characters of an identifier
-	 * precondition
+
+	/** Checks the amount of characters of an identifier
+	 * @precondition
 	 * 		None.
-	 * postcondition
+	 * @postcondition
 	 * 		The amount of characters the identifier contains is returned in type int.
-	 */
+	 **/
 	int length();
 }
