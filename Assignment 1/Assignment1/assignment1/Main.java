@@ -98,27 +98,25 @@ public class Main {
 	}
 	
 	void processCollectionInput(Collection collection1, Collection collection2) throws Exception{
-		Collection difference = collection1.difference(collection2);
+		//Collection difference = collection1.difference(collection2);
 		out.printf("difference = ");
-		printCollection(difference);
+		printCollection(collection1.difference(collection2));
+		//printCollection(difference);
 		
-		Collection intersection = collection1.intersection(collection2);
+		//Collection intersection = collection1.intersection(collection2);
 		out.printf("intersection = ");
-		printCollection(intersection);
+		printCollection(collection1.intersection(collection2));
+		//printCollection(intersection);
 		
-		Collection union = collection1.union(collection2);
+		//Collection union = collection1.union(collection2);
 		out.printf("union = ");
-		printCollection(union);
+		printCollection(collection1.union(collection2));
+		//printCollection(union);
 		
-		Collection symmetricDifference = collection1.symmetricDifference(collection2);
+		//Collection symmetricDifference = collection1.symmetricDifference(collection2);
 		out.printf("sym. diff. = ");
-		printCollection(symmetricDifference);
-		
-		
-		//printCollection(collection1.difference(collection2));
-		//printCollection(collection1.intersection(collection2));
-		//printCollection(collection1.union(collection2));
-		//printCollection(collection1.symmetricDifference(collection2));
+		printCollection(collection1.symmetricDifference(collection2));
+		//printCollection(symmetricDifference);
 	}
 	
 	void start(){
