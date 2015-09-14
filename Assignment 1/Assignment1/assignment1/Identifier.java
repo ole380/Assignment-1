@@ -2,8 +2,8 @@ package assignment1;
 
 public class Identifier implements IdentifierInterface {
 
-	StringBuffer identifier;
-	int length;
+	private StringBuffer identifier;
+	private int length;
 	
 	Identifier(char c){
 		identifier = new StringBuffer();
@@ -19,6 +19,10 @@ public class Identifier implements IdentifierInterface {
 		identifier = new StringBuffer();
 		identifier.append(c);
 		length = 1;
+	}
+	
+	public String toString(){
+		return identifier.toString();
 	}
 
 	public void addCharacter(char c) {

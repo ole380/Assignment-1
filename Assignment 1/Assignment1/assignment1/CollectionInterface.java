@@ -71,6 +71,14 @@ public interface CollectionInterface {
 	 */
 	Identifier get();
 	
+	/* Returns an identifier as a String object.
+	 * @precondition
+	 * 		None.
+	 * @postcondition
+	 * 		The content of the identifier is returned as a String object.
+	 */
+	String toString();
+	
 	// Natural operations
 	
 	/*  Checks if this collection is equal to collection2.
