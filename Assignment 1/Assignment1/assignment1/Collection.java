@@ -56,7 +56,7 @@ public class Collection implements CollectionInterface {
 	}
 
 	public Identifier get() {
-		return identifierArray[size -1];
+		return identifierArray[0];
 	}
 
 	public boolean isEqual(Collection collection2) {
