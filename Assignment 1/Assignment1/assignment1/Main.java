@@ -48,7 +48,7 @@ public class Main {
 		}
 		String[] identifierInputArray = collectionString.substring(1,collectionString.length()-1).split(" ");
 		if(identifierInputArray.length > 10) {
-			out.printf("The collection may not contain more than 10 elements.\n");
+			out.printf("The set may not contain more than 10 elements.\n");
 			return false;
 		}
 		for(String identifierInput : identifierInputArray) {
@@ -100,7 +100,7 @@ public class Main {
 		}
 	}
 
-	void processCollectios(Collection collection1, Collection collection2) throws Exception{
+	void processCollection(Collection collection1, Collection collection2) throws Exception{
 		out.printf("difference = %s\n", collectionToString(collection1.difference(collection2)));
 		out.printf("intersection = %s\n", collectionToString(collection1.intersection(collection2)));
 		out.printf("union = %s\n", collectionToString(collection1.union(collection2)));
@@ -112,7 +112,7 @@ public class Main {
 		Scanner in = new Scanner(System.in);
 		while (true){
 			try {
-				processCollectios(getCollectionInput(in,"first") , getCollectionInput(in,"second"));
+				processCollection(getCollectionInput(in,"first") , getCollectionInput(in,"second"));
 			} catch (Exception e) {
 				System.exit(0);
 			}	
