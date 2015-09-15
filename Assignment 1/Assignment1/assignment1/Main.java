@@ -5,133 +5,119 @@ import java.io.PrintStream;
 
 public class Main {
 
-	static final char SET_OPEN_MARK = '{';
-	static final char SET_CLOSE_MARK = '}';
-	static final String FIRST_NOT_A_LETTER_ERROR_MESSAGE = "Wrong identifier input, identifiers always start with a letter.";
-	static final String NON_ALPHANUMERIC_CHARACTER_ERROR_MESSAGE = "Wrong identifier input, identifiers can only consist of alphanumeric characters.";
-	static final String SET_TOO_LARGE_ERROR_MESSAGE = "This set is too large, only sets up to 10 identifiers are allowed as input.";
-	static final String END_OF_FIELD_ERROR_MESSAGE = "No line found";
+	static final char COLLECTION_OPEN_MARK = '{';
+	static final char COLLECTION_CLOSE_MARK = '}';
 	PrintStream out;
 
 	Main(){
 		out = new PrintStream(System.out);
 	}
 
+	boolean isValidIdentifierInput(String identifierString){
+		if(!Character.isLetter(identifierString.charAt(0))) {
+			out.printf("Each element must start with a letter.\n");
+			return false;
+		}
+		for(int i=1; i<identifierString.length(); i++) {
+			if(!Character.isLetter(identifierString.charAt(i)) && !Character.isDigit(identifierString.charAt(i))) {
+				out.printf("Each element may only contain alphanumeric characters.\n");
+				return false;
+			}
+		}
+		return true;
+	}
 
-	boolean checkValidCollectionInput(String collection){
-		if(collection.length()==0){
+	boolean isValidCollectionFormat(String collectionString){
+		if(collectionString.length()==0){
 			return false;
-		}else if (collection.charAt(0) == SET_OPEN_MARK && !(collection.charAt(collection.length()-1) == SET_CLOSE_MARK)){
-			out.printf("Missing '%c'\n", SET_CLOSE_MARK);
+		}
+		if (collectionString.charAt(0) != COLLECTION_OPEN_MARK){
+			out.printf("Missing '%c'\n", COLLECTION_OPEN_MARK);
 			return false;				
-		}else if (!(collection.charAt(collection.length()-1) == SET_CLOSE_MARK)){
-			out.printf("Missing '%c'\nMissing '%c'\n", SET_OPEN_MARK, SET_CLOSE_MARK);
-			return false;
-		}else if(!(collection.charAt(0) == SET_OPEN_MARK)){
-			out.printf("Missing '%c'\n", SET_OPEN_MARK);
+		}
+		if (collectionString.charAt(collectionString.length()-1) != COLLECTION_CLOSE_MARK){
+			out.printf("Missing '%c'\n",  COLLECTION_CLOSE_MARK);
 			return false;
 		}	
 		return true;
 	}
 
-	boolean checkLetter(Scanner in){
-		return in.hasNext("[a-zA-Z]");
-	}
-
-	boolean checkDigit(Scanner in){
-		return in.hasNext("[0-9]");
-	}
-
-	boolean checkAlphanumeric(Scanner in){
-		return checkLetter(in) || (checkDigit(in));
-	}
-
-	Identifier readIdentifierInput(Scanner identifierScanner) throws Exception{
-		identifierScanner.useDelimiter("");
-
-		if(!checkLetter(identifierScanner)){
-			throw new Exception(FIRST_NOT_A_LETTER_ERROR_MESSAGE);
+	boolean isValidCollectionInput(String collectionString){
+		if(!isValidCollectionFormat(collectionString)){
+			return false;
 		}
-		Identifier resultIdentifier = new Identifier(identifierScanner.next().charAt(0));
-		while(identifierScanner.hasNext()){
-			if(!checkAlphanumeric(identifierScanner)){
-				throw new Exception(NON_ALPHANUMERIC_CHARACTER_ERROR_MESSAGE);
+		String[] identifierInputArray = collectionString.substring(1,collectionString.length()-1).split(" ");
+		if(identifierInputArray.length > 10) {
+			out.printf("The collection may not contain more than 10 elements.\n");
+			return false;
+		}
+		for(String identifierInput : identifierInputArray) {
+			if(!isValidIdentifierInput(identifierInput)) {
+				return false;
 			}
-			resultIdentifier.addCharacter(identifierScanner.next().charAt(0));
+		}
+		return true;
+	}
+
+	Identifier constructIdentifier(String identifierString){
+		Identifier resultIdentifier = new Identifier(identifierString.charAt(0));
+		for(int i=1; i<identifierString.length(); i++){
+			resultIdentifier.addCharacter(identifierString.charAt(i));
 		}
 		return resultIdentifier;
 	}
 
-	Collection readCollectionInput(Scanner collectionScanner) throws Exception{
+	Collection constructCollection(String collectionString)throws Exception{
 		Collection resultCollection = new Collection();
-		collectionScanner.useDelimiter(" ");
-		while (collectionScanner.hasNext()){
-			if (resultCollection.size() >= 10){
-				throw new Exception(SET_TOO_LARGE_ERROR_MESSAGE);
-			}
-			Scanner identifierScanner = new Scanner(collectionScanner.next());
-			resultCollection.addIdentifier(readIdentifierInput(identifierScanner));
+		String[] identifierInputArray = collectionString.substring(1,collectionString.length()-1).split(" ");
+		for (String identifierInput : identifierInputArray) {
+			resultCollection.addIdentifier(constructIdentifier(identifierInput));
 		}
 		return resultCollection;
 	}
 
-	Collection getCollectionInput(Scanner in, String s) throws Exception{
+	Collection getCollectionInput(Scanner in, String setOrdinal) throws Exception{
 		String collectionInput;
 		do{
-			out.printf("Give the %s set : ", s);
+			out.printf("Give the %s set : ", setOrdinal);
 			collectionInput = in.nextLine();
-		}while (!checkValidCollectionInput(collectionInput));
-		collectionInput = collectionInput.substring(1, collectionInput.length()-1);
-		Scanner collectionScanner = new Scanner(collectionInput);
-		return readCollectionInput(collectionScanner);
+		}while (!isValidCollectionInput(collectionInput));
+		return constructCollection(collectionInput);
 	}
 
-	void printCollection(Collection collection, String s){
+	String collectionToString(Collection collection){
 		Collection resultCollection = new Collection(collection);
-		out.printf("%s = {",s);
+		String resultString = "{";
 		for (int i=0; i < collection.size(); i++){
 			Identifier identifier = resultCollection.get();
-			if(resultCollection.size() == 1){
-				out.printf("%s", identifier.toString());
-			}else{
-				out.printf("%s ", identifier.toString());
-			}
+			resultString = resultString + identifier.toString() + " ";
 			resultCollection.removeIdentifier(identifier);
 		}
-		out.printf("}\n");
-	}
-
-	void processCollectionInput(Collection collection1, Collection collection2) throws Exception{
-		printCollection(collection1.difference(collection2),"difference");
-		printCollection(collection1.intersection(collection2),"intersection");
-		printCollection(collection1.union(collection2),"union");
-		printCollection(collection1.symmetricDifference(collection2),"sym. diff.");
-		out.println();
-	}
-
-	void handleException(Exception e){
-		String errorMessage = e.getMessage();
-		if(errorMessage.equals(FIRST_NOT_A_LETTER_ERROR_MESSAGE) || errorMessage.equals(NON_ALPHANUMERIC_CHARACTER_ERROR_MESSAGE) || errorMessage.equals(SET_TOO_LARGE_ERROR_MESSAGE)){
-			out.printf("%s\n", errorMessage);
-		}else if(errorMessage.equals(END_OF_FIELD_ERROR_MESSAGE)){
-			System.exit(0);
+		if(resultString.length() == 1){
+			return resultString + "}";
 		}else{
-			e.printStackTrace();
-			System.exit(0);
+			return resultString.substring(0, resultString.length()-1) + "}";
 		}
+	}
+
+	void processCollectios(Collection collection1, Collection collection2) throws Exception{
+		out.printf("difference = %s\n", collectionToString(collection1.difference(collection2)));
+		out.printf("intersection = %s\n", collectionToString(collection1.intersection(collection2)));
+		out.printf("union = %s\n", collectionToString(collection1.union(collection2)));
+		out.printf("sym. diff. = %s\n", collectionToString(collection1.symmetricDifference(collection2)));
+		out.println();
 	}
 
 	void start(){
 		Scanner in = new Scanner(System.in);
-		do{
+		while (true){
 			try {
-				processCollectionInput(getCollectionInput(in,"first") , getCollectionInput(in,"second"));	
+				processCollectios(getCollectionInput(in,"first") , getCollectionInput(in,"second"));
 			} catch (Exception e) {
-				handleException(e);
-			}
-		}while (true);
+				System.exit(0);
+			}	
+		}
 	}
-
 
 	public static void main(String[] args) {
 		new Main().start();

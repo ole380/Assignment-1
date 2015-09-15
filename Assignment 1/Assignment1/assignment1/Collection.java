@@ -80,19 +80,6 @@ public class Collection implements CollectionInterface {
 		return size == 0;
 	}
 
-	public String toString(){
-		String resultString = "";
-		for (int i=0; i < size; i++){
-			if(size == 1){
-				resultString = resultString + identifierArray[i];
-			}else{
-				resultString = resultString + identifierArray[i] + " ";
-			}
-		}
-		return resultString;
-	}
-
-
 	public Collection difference(Collection collection2){
 		Collection resultCollection = new Collection(this);
 		for (int i=0; i<collection2.size; i++){
@@ -120,7 +107,7 @@ public class Collection implements CollectionInterface {
 			}else if(resultCollection.containsIdentifier(collection2.identifierArray[i])){
 				continue;
 			}else{
-				throw new Exception("set contains over 20 identifiers, cannot form set.");
+				throw new Exception("Collection contains more than 20 identifiers, cannot form collection.");
 			}
 		}
 		return resultCollection;
