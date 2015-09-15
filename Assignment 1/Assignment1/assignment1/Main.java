@@ -7,10 +7,12 @@ public class Main {
 
 	static final char COLLECTION_OPEN_MARK = '{';
 	static final char COLLECTION_CLOSE_MARK = '}';
+	boolean errorHasOccurred;
 	PrintStream out;
 
 	Main(){
 		out = new PrintStream(System.out);
+		errorHasOccurred = false;
 	}
 
 	boolean isValidIdentifierInput(String identifierString){
@@ -67,19 +69,32 @@ public class Main {
 		return resultIdentifier;
 	}
 
-	Collection constructCollection(String collectionString)throws Exception{
+	Collection constructCollection(String collectionString){
 		Collection resultCollection = new Collection();
 		String[] identifierInputArray = collectionString.substring(1,collectionString.length()-1).split(" ");
 		for (String identifierInput : identifierInputArray) {
-			resultCollection.addIdentifier(constructIdentifier(identifierInput));
+			try {
+				resultCollection.addIdentifier(constructIdentifier(identifierInput));
+			} catch (Exception e) {
+				out.printf("%s", e.getMessage());
+				errorHasOccurred = true;
+				continue;
+			}
 		}
 		return resultCollection;
 	}
 
-	Collection getCollectionInput(Scanner in, String setOrdinal) throws Exception{
+	
+	
+	Collection getCollectionInput(Scanner in, String setOrdinal) {
 		String collectionInput;
 		do{
 			out.printf("Give the %s set : ", setOrdinal);
+			//Eclipse somehow does not generate EOF from time to time when pressing ctrl+z so this does not always work.
+			if(!in.hasNext()){
+				out.println("Program ends here because of End Of File");
+				System.exit(0);
+			}
 			collectionInput = in.nextLine();
 		}while (!isValidCollectionInput(collectionInput));
 		return constructCollection(collectionInput);
@@ -100,22 +115,24 @@ public class Main {
 		}
 	}
 
-	void processCollection(Collection collection1, Collection collection2) throws Exception{
-		out.printf("difference = %s\n", collectionToString(collection1.difference(collection2)));
-		out.printf("intersection = %s\n", collectionToString(collection1.intersection(collection2)));
-		out.printf("union = %s\n", collectionToString(collection1.union(collection2)));
-		out.printf("sym. diff. = %s\n", collectionToString(collection1.symmetricDifference(collection2)));
-		out.println();
+	void processCollection(Collection collection1, Collection collection2) {
+		if(!errorHasOccurred){
+			out.printf("difference = %s\n", collectionToString(collection1.difference(collection2)));
+			out.printf("intersection = %s\n", collectionToString(collection1.intersection(collection2)));
+			try {
+				out.printf("union = %s\n", collectionToString(collection1.union(collection2)));
+				out.printf("sym. diff. = %s\n", collectionToString(collection1.symmetricDifference(collection2)));
+				out.println();
+			} catch (Exception e) {
+				out.printf("%s", e.getMessage());
+			}
+		}
 	}
 
 	void start(){
 		Scanner in = new Scanner(System.in);
 		while (true){
-			try {
 				processCollection(getCollectionInput(in,"first") , getCollectionInput(in,"second"));
-			} catch (Exception e) {
-				System.exit(0);
-			}	
 		}
 	}
 

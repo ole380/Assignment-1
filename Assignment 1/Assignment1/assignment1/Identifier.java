@@ -12,7 +12,7 @@ public class Identifier implements IdentifierInterface {
 	}
 
 	Identifier(Identifier src){
-		identifier = src.identifier;
+		identifier = new StringBuffer(src.identifier);
 	}
 
 	public void init(char c) {

@@ -15,7 +15,7 @@ public class Collection implements CollectionInterface {
 	Collection(Collection src){
 		identifierArray = new Identifier[MAX_COLLECTION_SIZE];
 		for(int i=0; i<src.size; i++){
-			identifierArray[i] = src.identifierArray[i];
+			identifierArray[i] = new Identifier(src.identifierArray[i]);
 		}
 		size = src.size;
 	}
