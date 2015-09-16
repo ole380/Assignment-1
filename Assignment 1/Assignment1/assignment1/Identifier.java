@@ -2,45 +2,45 @@ package assignment1;
 
 public class Identifier implements IdentifierInterface {
 
-	private StringBuffer identifier;
-	private int length;
+	private StringBuffer identifierContent;
+	private int identifierLength;
 
 	Identifier(char c){
-		identifier = new StringBuffer();
-		identifier.append(c);
-		length = 1;
+		identifierContent = new StringBuffer();
+		identifierContent.append(c);
+		identifierLength = 1;
 	}
 
 	Identifier(Identifier src){
-		identifier = new StringBuffer(src.identifier);
-		length = src.length;
+		identifierContent = new StringBuffer(src.identifierContent);
+		identifierLength = src.identifierLength;
 	}
 
 	public void init(char c) {
-		identifier = new StringBuffer();
-		identifier.append(c);
-		length = 1;
+		identifierContent = new StringBuffer();
+		identifierContent.append(c);
+		identifierLength = 1;
 	}
 
 	public String toString(){
-		return identifier.toString();
+		return identifierContent.toString();
 	}
 
 	public void addCharacter(char c) {
-		identifier.append(c);
-		length++;
+		identifierContent.append(c);
+		identifierLength++;
 	}
 
 	public char removeLastCharacter() {
-		char lastChar = identifier.charAt(length-1);
-		identifier.deleteCharAt(length-1);
+		char lastChar = identifierContent.charAt(identifierLength-1);
+		identifierContent.deleteCharAt(identifierLength-1);
 		return lastChar;
 	}
 
 	public boolean isEqual(Identifier identifier2) {
-		if (length==identifier2.length){
-			for (int i=0; i<length; i++){
-				if(identifier.charAt(i)==identifier2.identifier.charAt(i)){
+		if (identifierLength==identifier2.identifierLength){
+			for (int i=0; i<identifierLength; i++){
+				if(identifierContent.charAt(i)==identifier2.identifierContent.charAt(i)){
 					continue;
 				}
 				return false;
@@ -51,7 +51,7 @@ public class Identifier implements IdentifierInterface {
 	}
 
 	public int length() {
-		return length;
+		return identifierLength;
 	}
 
 }

@@ -22,7 +22,7 @@ public class Main {
 			return false;
 		}
 		for(int i=1; i<identifierString.length(); i++) {
-			if(!Character.isLetter(identifierString.charAt(i)) && !Character.isDigit(identifierString.charAt(i))) {
+			if(!Character.isLetterOrDigit(identifierString.charAt(i))){
 				out.printf("Each element may only contain alphanumeric characters.\n");
 				return false;
 			}
