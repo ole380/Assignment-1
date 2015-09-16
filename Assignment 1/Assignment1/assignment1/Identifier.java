@@ -13,6 +13,7 @@ public class Identifier implements IdentifierInterface {
 
 	Identifier(Identifier src){
 		identifier = new StringBuffer(src.identifier);
+		length = src.length;
 	}
 
 	public void init(char c) {
