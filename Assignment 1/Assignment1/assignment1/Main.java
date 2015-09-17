@@ -8,12 +8,10 @@ public class Main {
 	static final char COLLECTION_OPEN_MARK = '{';
 	static final char COLLECTION_CLOSE_MARK = '}';
 	static final String DELIMITER_IDENTIFIERS = " ";
-	boolean errorHasOccurred;
 	PrintStream out;
 
 	Main(){
 		out = new PrintStream(System.out);
-		errorHasOccurred = false;
 	}
 
 	boolean isValidIdentifierInput(String identifierString){
@@ -21,12 +19,14 @@ public class Main {
 			out.printf("Each element must start with a letter.\n");
 			return false;
 		}
+		
 		for(int i=1; i<identifierString.length(); i++) {
 			if(!Character.isLetterOrDigit(identifierString.charAt(i))){
 				out.printf("Each element may only contain alphanumeric characters.\n");
 				return false;
 			}
 		}
+		
 		return true;
 	}
 
@@ -34,14 +34,19 @@ public class Main {
 		if(collectionString.length()==0){
 			return false;
 		}
-		if (collectionString.charAt(0) != COLLECTION_OPEN_MARK){
+		
+		char firstChar = collectionString.charAt(0);
+		if (firstChar != COLLECTION_OPEN_MARK){
 			out.printf("Missing '%c'\n", COLLECTION_OPEN_MARK);
 			return false;				
 		}
-		if (collectionString.charAt(collectionString.length()-1) != COLLECTION_CLOSE_MARK){
+		
+		char lastChar = collectionString.charAt(collectionString.length()-1);
+		if (lastChar != COLLECTION_CLOSE_MARK){
 			out.printf("Missing '%c'\n",  COLLECTION_CLOSE_MARK);
 			return false;
 		}	
+		
 		return true;
 	}
 
@@ -49,11 +54,15 @@ public class Main {
 		if(!isValidCollectionFormat(collectionString)){
 			return false;
 		}
-		String[] identifierInputArray = collectionString.substring(1,collectionString.length()-1).split(" ");
+		
+		String withoutDelimiters = collectionString.substring(1,collectionString.length()-1);
+		String[] identifierInputArray = withoutDelimiters.split(" ");
+		
 		if(identifierInputArray.length > 10) {
 			out.printf("The set may not contain more than 10 elements.\n");
 			return false;
 		}
+		
 		if(!identifierInputArray[0].equals("")){
 			for(String identifierInput : identifierInputArray) {
 				if(!isValidIdentifierInput(identifierInput)) {
@@ -61,6 +70,7 @@ public class Main {
 				}
 			}
 		}
+		
 		return true;
 	}
 
@@ -74,14 +84,17 @@ public class Main {
 
 	Collection constructCollection(String collectionString){
 		Collection resultCollection = new Collection();
-		String[] identifierInputArray = collectionString.substring(1,collectionString.length()-1).split(" ");
+		
+		String withoutDelimiters = collectionString.substring(1,collectionString.length()-1);
+		String[] identifierInputArray = withoutDelimiters.split(" ");
+		
 		if(!identifierInputArray[0].equals("")){
 			for (String identifierInput : identifierInputArray) {
 				try {
-					resultCollection.addIdentifier(constructIdentifier(identifierInput));
+					Identifier nextIdentifier = constructIdentifier(identifierInput);
+					resultCollection.addIdentifier(nextIdentifier);
 				} catch (Exception e) {
 					out.printf("%s", e.getMessage());
-					errorHasOccurred = true;
 					break;
 				}
 			}
@@ -91,6 +104,7 @@ public class Main {
 
 	Collection getCollectionInput(Scanner in, String setOrdinal) {
 		String collectionInput;
+		
 		do{
 			out.printf("Give the %s set : ", setOrdinal);
 			//Eclipse somehow does not generate EOF from time to time when pressing ctrl+z so this does not always work.
@@ -105,12 +119,14 @@ public class Main {
 
 	String collectionToString(Collection collection){
 		Collection resultCollection = new Collection(collection);
+		
 		String resultString = "{";
 		for (int i=0; i < collection.size(); i++){
 			Identifier identifier = resultCollection.get();
 			resultString = resultString + identifier.toString() + " ";
 			resultCollection.removeIdentifier(identifier);
 		}
+		
 		if(resultString.length() == 1){
 			return resultString + "}";
 		}else{
@@ -119,29 +135,31 @@ public class Main {
 	}
 
 	void processCollection(Collection collection1, Collection collection2) {
-		out.printf("difference = %s\n", collectionToString(collection1.difference(collection2)));
-		out.printf("intersection = %s\n", collectionToString(collection1.intersection(collection2)));
+		Collection difference = collection1.difference(collection2);
+		out.printf("difference = %s\n", collectionToString(difference));
+		
+		Collection intersection = collection1.intersection(collection2);
+		out.printf("intersection = %s\n", collectionToString(intersection));
+		
 		try {
-			out.printf("union = %s\n", collectionToString(collection1.union(collection2)));
-			out.printf("sym. diff. = %s\n", collectionToString(collection1.symmetricDifference(collection2)));
-			out.println();
+			Collection union = collection1.union(collection2);
+			out.printf("union = %s\n", collectionToString(union));
+			
+			Collection symmetricDifference = collection1.symmetricDifference(collection2);
+			out.printf("sym. diff. = %s\n", collectionToString(symmetricDifference));
 		} catch (Exception e) {
-			out.printf("%s", e.getMessage());
+			//Cannot occur because collection size is checked in isValidCollectionInput
 		}
+		
+		out.println();
 	}
 
 	void start(){
 		Scanner in = new Scanner(System.in);
 		while (true){
 			Collection collection1 = getCollectionInput(in, "first");
-			if(!errorHasOccurred){
-				Collection collection2 = getCollectionInput(in, "second");
-				if(!errorHasOccurred){
-					processCollection(collection1, collection2);
-				}
-			}
-			//processCollection(getCollectionInput(in,"first") , getCollectionInput(in,"second"));
-			errorHasOccurred = false;
+			Collection collection2 = getCollectionInput(in, "second");
+			processCollection(collection1, collection2);
 		}
 	}
 
