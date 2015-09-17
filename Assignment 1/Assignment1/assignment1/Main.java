@@ -86,7 +86,7 @@ public class Main {
 		Collection resultCollection = new Collection();
 		
 		String withoutDelimiters = collectionString.substring(1,collectionString.length()-1);
-		String[] identifierInputArray = withoutDelimiters.split(" ");
+		String[] identifierInputArray = withoutDelimiters.split(DELIMITER_IDENTIFIERS);
 		
 		if(!identifierInputArray[0].equals("")){
 			for (String identifierInput : identifierInputArray) {
@@ -94,7 +94,9 @@ public class Main {
 					Identifier nextIdentifier = constructIdentifier(identifierInput);
 					resultCollection.addIdentifier(nextIdentifier);
 				} catch (Exception e) {
+					//Cannot occur because collection size is checked in isValidCollectionInput to be limited to 10 per collection. 
 					out.printf("%s", e.getMessage());
+					e.printStackTrace();
 					break;
 				}
 			}
@@ -107,9 +109,7 @@ public class Main {
 		
 		do{
 			out.printf("Give the %s set : ", setOrdinal);
-			//Eclipse somehow does not generate EOF from time to time when pressing ctrl+z so this does not always work.
 			if(!in.hasNextLine()){
-				out.println("Program ends here because of End Of File");
 				System.exit(0);
 			}
 			collectionInput = in.nextLine();
@@ -148,7 +148,8 @@ public class Main {
 			Collection symmetricDifference = collection1.symmetricDifference(collection2);
 			out.printf("sym. diff. = %s\n", collectionToString(symmetricDifference));
 		} catch (Exception e) {
-			//Cannot occur because collection size is checked in isValidCollectionInput
+			//Cannot occur because collection size is checked in isValidCollectionInput to be limited to 10 per collection.
+			e.printStackTrace();
 		}
 		
 		out.println();
