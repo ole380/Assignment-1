@@ -15,11 +15,11 @@ public class Main {
 	}
 	
 	String removeWhiteSpacesFromInputFrontAndBack(String collectionString){
-		while(Character.isWhitespace(collectionString.charAt(0))){
-			collectionString = collectionString.substring(1, collectionString.length());
+		while(collectionString.length() != 0 && Character.isWhitespace(collectionString.charAt(0))){
+				collectionString = collectionString.substring(1, collectionString.length());
 		}
-		while(Character.isWhitespace(collectionString.charAt(collectionString.length()-1))){
-			collectionString = collectionString.substring(0, collectionString.length()-1);
+		while(collectionString.length() != 0 && Character.isWhitespace(collectionString.charAt(collectionString.length()-1))){
+				collectionString = collectionString.substring(0, collectionString.length()-1);	
 		}
 		
 		return collectionString;
@@ -42,11 +42,11 @@ public class Main {
 	}
 
 	boolean isValidCollectionFormat(String collectionString){
+		collectionString = removeWhiteSpacesFromInputFrontAndBack(collectionString);
 		if(collectionString.length()==0){
 			return false;
 		}
 		
-		collectionString = removeWhiteSpacesFromInputFrontAndBack(collectionString);
 		char firstChar = collectionString.charAt(0);
 		if (firstChar != COLLECTION_OPEN_MARK){
 			out.printf("Missing '%c'\n", COLLECTION_OPEN_MARK);
