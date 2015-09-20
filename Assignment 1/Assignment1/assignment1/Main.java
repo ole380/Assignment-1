@@ -13,20 +13,31 @@ public class Main {
 	Main(){
 		out = new PrintStream(System.out);
 	}
+	
+	String removeWhiteSpacesFromInputFrontAndBack(String collectionString){
+		while(Character.isWhitespace(collectionString.charAt(0))){
+			collectionString = collectionString.substring(1, collectionString.length());
+		}
+		while(Character.isWhitespace(collectionString.charAt(collectionString.length()-1))){
+			collectionString = collectionString.substring(0, collectionString.length()-1);
+		}
+		
+		return collectionString;
+	}
 
 	boolean isValidIdentifierInput(String identifierString){
 		if(!Character.isLetter(identifierString.charAt(0))) {
 			out.printf("Each element must start with a letter.\n");
 			return false;
 		}
-		
+
 		for(int i=1; i<identifierString.length(); i++) {
 			if(!Character.isLetterOrDigit(identifierString.charAt(i))){
 				out.printf("Each element may only contain alphanumeric characters.\n");
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -35,18 +46,19 @@ public class Main {
 			return false;
 		}
 		
+		collectionString = removeWhiteSpacesFromInputFrontAndBack(collectionString);
 		char firstChar = collectionString.charAt(0);
 		if (firstChar != COLLECTION_OPEN_MARK){
 			out.printf("Missing '%c'\n", COLLECTION_OPEN_MARK);
 			return false;				
 		}
-		
+
 		char lastChar = collectionString.charAt(collectionString.length()-1);
 		if (lastChar != COLLECTION_CLOSE_MARK){
 			out.printf("Missing '%c'\n",  COLLECTION_CLOSE_MARK);
 			return false;
 		}	
-		
+
 		return true;
 	}
 
@@ -54,23 +66,25 @@ public class Main {
 		if(!isValidCollectionFormat(collectionString)){
 			return false;
 		}
-		
+
+		collectionString = removeWhiteSpacesFromInputFrontAndBack(collectionString);
 		String withoutDelimiters = collectionString.substring(1,collectionString.length()-1);
 		String[] identifierInputArray = withoutDelimiters.split(" ");
-		
+
 		if(identifierInputArray.length > 10) {
 			out.printf("The set may not contain more than 10 elements.\n");
 			return false;
 		}
-		
-		if(!identifierInputArray[0].equals("")){
-			for(String identifierInput : identifierInputArray) {
+
+
+		for(String identifierInput : identifierInputArray) {
+			if(!identifierInput.equals("")){
 				if(!isValidIdentifierInput(identifierInput)) {
 					return false;
 				}
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -84,12 +98,14 @@ public class Main {
 
 	Collection constructCollection(String collectionString){
 		Collection resultCollection = new Collection();
-		
+
+		collectionString = removeWhiteSpacesFromInputFrontAndBack(collectionString);
 		String withoutDelimiters = collectionString.substring(1,collectionString.length()-1);
 		String[] identifierInputArray = withoutDelimiters.split(DELIMITER_IDENTIFIERS);
-		
-		if(!identifierInputArray[0].equals("")){
-			for (String identifierInput : identifierInputArray) {
+
+
+		for (String identifierInput : identifierInputArray) {
+			if(!identifierInput.equals("")){
 				try {
 					Identifier nextIdentifier = constructIdentifier(identifierInput);
 					resultCollection.addIdentifier(nextIdentifier);
@@ -106,7 +122,7 @@ public class Main {
 
 	Collection getCollectionInput(Scanner in, String setOrdinal) {
 		String collectionInput;
-		
+
 		do{
 			out.printf("Give the %s set : ", setOrdinal);
 			if(!in.hasNextLine()){
@@ -119,14 +135,14 @@ public class Main {
 
 	String collectionToString(Collection collection){
 		Collection resultCollection = new Collection(collection);
-		
+
 		String resultString = "{";
 		for (int i=0; i < collection.size(); i++){
 			Identifier identifier = resultCollection.get();
 			resultString = resultString + identifier.toString() + " ";
 			resultCollection.removeIdentifier(identifier);
 		}
-		
+
 		if(resultString.length() == 1){
 			return resultString + "}";
 		}else{
@@ -137,21 +153,21 @@ public class Main {
 	void processCollection(Collection collection1, Collection collection2) {
 		Collection difference = collection1.difference(collection2);
 		out.printf("difference = %s\n", collectionToString(difference));
-		
+
 		Collection intersection = collection1.intersection(collection2);
 		out.printf("intersection = %s\n", collectionToString(intersection));
-		
+
 		try {
 			Collection union = collection1.union(collection2);
 			out.printf("union = %s\n", collectionToString(union));
-			
+
 			Collection symmetricDifference = collection1.symmetricDifference(collection2);
 			out.printf("sym. diff. = %s\n", collectionToString(symmetricDifference));
 		} catch (Exception e) {
 			//Cannot occur because collection size is checked in isValidCollectionInput to be limited to 10 per collection.
 			e.printStackTrace();
 		}
-		
+
 		out.println();
 	}
 
