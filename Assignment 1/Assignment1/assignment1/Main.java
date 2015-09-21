@@ -63,29 +63,27 @@ public class Main {
 		return true;
 	}
 
+	boolean isDuplicateElement(String[]elementStringArray, int elementIndex){
+		for(int i = 0; i < elementIndex; i++){
+			if(elementStringArray[i].equals(elementStringArray[elementIndex])){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	boolean isValidCollectionInput(String collectionString){
 		if(!isValidCollectionFormat(collectionString)){
 			return false;
 		}
-
-		collectionString = removeWhiteSpacesFromInputFrontAndBack(collectionString);
-		String withoutDelimiters = collectionString.substring(1,collectionString.length()-1);
-		String[] identifierInputArray = withoutDelimiters.split(" ");
-
+		String[] identifierInputArray = createIdentifierInputArray(collectionString);
 		int numberOfElements = 0;
 		for(int i = 0; i < identifierInputArray.length; i++){
 			if(!identifierInputArray[i].equals("")){
 				if(!isValidIdentifierInput(identifierInputArray[i])) {
 					return false;
 				}
-				boolean duplicateElement = false;
-				for(int j = 0; j < i; j++){
-					if(identifierInputArray[j].equals(identifierInputArray[i])){
-						duplicateElement = true;
-						break;
-					}
-				}
-				if(!duplicateElement){
+				if(!isDuplicateElement(identifierInputArray, i)){
 					numberOfElements++;
 				}
 			}
@@ -106,14 +104,15 @@ public class Main {
 		return resultIdentifier;
 	}
 
-	Collection constructCollection(String collectionString){
-		Collection resultCollection = new Collection();
-
+	String[] createIdentifierInputArray(String collectionString){
 		collectionString = removeWhiteSpacesFromInputFrontAndBack(collectionString);
 		String withoutDelimiters = collectionString.substring(1,collectionString.length()-1);
-		String[] identifierInputArray = withoutDelimiters.split(DELIMITER_IDENTIFIERS);
-
-
+		return withoutDelimiters.split(DELIMITER_IDENTIFIERS);
+	}
+	
+	Collection constructCollection(String collectionString){
+		Collection resultCollection = new Collection();
+		String[] identifierInputArray = createIdentifierInputArray(collectionString);
 		for (String identifierInput : identifierInputArray) {
 			if(!identifierInput.equals("")){
 				try {
