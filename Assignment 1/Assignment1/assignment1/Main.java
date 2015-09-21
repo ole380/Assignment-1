@@ -8,6 +8,7 @@ public class Main {
 	static final char COLLECTION_OPEN_MARK = '{';
 	static final char COLLECTION_CLOSE_MARK = '}';
 	static final String DELIMITER_IDENTIFIERS = " ";
+	private static final int MAXIMUM_NUMBER_OF_ELEMENTS = 10;
 	PrintStream out;
 
 	Main(){
@@ -71,20 +72,29 @@ public class Main {
 		String withoutDelimiters = collectionString.substring(1,collectionString.length()-1);
 		String[] identifierInputArray = withoutDelimiters.split(" ");
 
-		if(identifierInputArray.length > 10) {
-			out.printf("The set may not contain more than 10 elements.\n");
-			return false;
-		}
-
-
-		for(String identifierInput : identifierInputArray) {
-			if(!identifierInput.equals("")){
-				if(!isValidIdentifierInput(identifierInput)) {
+		int numberOfElements = 0;
+		for(int i = 0; i < identifierInputArray.length; i++){
+			if(!identifierInputArray[i].equals("")){
+				if(!isValidIdentifierInput(identifierInputArray[i])) {
 					return false;
+				}
+				boolean duplicateElement = false;
+				for(int j = 0; j < i; j++){
+					if(identifierInputArray[j].equals(identifierInputArray[i])){
+						duplicateElement = true;
+						break;
+					}
+				}
+				if(!duplicateElement){
+					numberOfElements++;
 				}
 			}
 		}
 
+		if(numberOfElements > MAXIMUM_NUMBER_OF_ELEMENTS){
+			out.printf("The set may not contain more than 10 elements.\n");
+			return false;
+		}
 		return true;
 	}
 
